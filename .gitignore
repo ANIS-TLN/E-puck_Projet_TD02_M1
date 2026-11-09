@@ -15,3 +15,11 @@ com/
 __pycache__/
 *.pyc
 venv/
+
+# Binaires compilés
+*.exe
+*.so
+*.dll
+*.dylib
+*.o
+build/
