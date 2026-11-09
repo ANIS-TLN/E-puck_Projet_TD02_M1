@@ -1,0 +1,17 @@
+# Fichiers générés par Webots
+*.cache
+*.wbproj
+*.so
+
+# Dossiers de compilation (si tu utilises C/C++ ou des build systems)
+build/
+com/
+
+# Fichiers de IDE (VSCode, etc.)
+.vscode/
+.idea/
+
+# Fichiers Python
+__pycache__/
+*.pyc
+venv/
