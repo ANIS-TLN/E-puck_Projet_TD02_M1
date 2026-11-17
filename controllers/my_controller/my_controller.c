@@ -1,52 +1,76 @@
-from controller import Robot
+#include <stdio.h>
+#include <stdlib.h>
+#include <webots/robot.h>
+#include <webots/distance_sensor.h>
+#include <webots/motor.h>
 
-# 1) Création de l'objet Robot
-robot = Robot()
+#define TIME_STEP 64
 
-# 2) Récupération du pas de temps
-timestep = int(robot.getBasicTimeStep())
+int main(int argc, char **argv)
+{
+    // 1) Initialisation du robot
+    wb_robot_init();
 
-# 3) Récupération et activation des capteurs de distance
-capteurs = []
+    // 2) Récupération du pas de temps
+    int timestep = (int)wb_robot_get_basic_time_step();
 
-noms_capteurs = [
-    'ps0', 'ps1', 'ps2', 'ps3',
-    'ps4', 'ps5', 'ps6', 'ps7'
-]
+    // 3) Récupération et activation des capteurs
+    WbDeviceTag capteurs[8];
 
-for nom in noms_capteurs:
-    capteur = robot.getDevice(nom)
-    capteur.enable(timestep)
-    capteurs.append(capteur)
+    const char *noms_capteurs[8] = {
+        "ps0", "ps1", "ps2", "ps3",
+        "ps4", "ps5", "ps6", "ps7"
+    };
 
-# 4) Récupération des moteurs des deux roues
-moteur_gauche = robot.getDevice('left wheel motor')
-moteur_droit = robot.getDevice('right wheel motor')
+    for (int i = 0; i < 8; i++) {
+        capteurs[i] = wb_robot_get_device(noms_capteurs[i]);
+        wb_distance_sensor_enable(capteurs[i], timestep);
+    }
 
-# Passage des moteurs en mode vitesse
-moteur_gauche.setPosition(float('inf'))
-moteur_droit.setPosition(float('inf'))
+    // 4) Récupération des moteurs
+    WbDeviceTag moteur_gauche =
+        wb_robot_get_device("left wheel motor");
 
-# Arrêt initial des moteurs
-moteur_gauche.setVelocity(0.0)
-moteur_droit.setVelocity(0.0)
+    WbDeviceTag moteur_droit =
+        wb_robot_get_device("right wheel motor");
 
-# 5) Boucle principale
-while robot.step(timestep) != -1:
+    // 5) Passage des moteurs en mode vitesse
+    wb_motor_set_position(moteur_gauche, INFINITY);
+    wb_motor_set_position(moteur_droit, INFINITY);
 
-    # Lecture des capteurs
-    valeurs = [c.getValue() for c in capteurs]
+    // Arrêt initial
+    wb_motor_set_velocity(moteur_gauche, 0.0);
+    wb_motor_set_velocity(moteur_droit, 0.0);
 
-    # Capteurs du côté droit
-    ps1, ps2 = valeurs[1], valeurs[2]
+    // 6) Boucle principale
+    while (wb_robot_step(timestep) != -1) {
 
-    # Capteurs du côté gauche
-    ps5, ps6 = valeurs[5], valeurs[6]
+        // Lecture des capteurs
+        double valeurs[8];
 
-    # 6) Logique de commande (à compléter)
-    vitesse_gauche = 2.0
-    vitesse_droite = 2.0
+        for (int i = 0; i < 8; i++) {
+            valeurs[i] = wb_distance_sensor_get_value(capteurs[i]);
+        }
 
-    # 7) Commande des moteurs
-    moteur_gauche.setVelocity(vitesse_gauche)
-    moteur_droit.setVelocity(vitesse_droite)
+        // Capteurs du côté droit
+        double ps1 = valeurs[1];
+        double ps2 = valeurs[2];
+
+        // Capteurs du côté gauche
+        double ps5 = valeurs[5];
+        double ps6 = valeurs[6];
+
+        // 7) Logique de commande (à compléter)
+        double vitesse_gauche = 2.0;
+        double vitesse_droite = 2.0;
+
+        // 8) Commande des moteurs
+        wb_motor_set_velocity(moteur_gauche, vitesse_gauche);
+        wb_motor_set_velocity(moteur_droit, vitesse_droite);
+    }
+
+    // 9) Arrêt du robot
+    wb_robot_cleanup();
+
+    return EXIT_SUCCESS;
+}
