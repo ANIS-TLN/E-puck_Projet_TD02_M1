@@ -1,61 +1,52 @@
-/*
- * File:          my_controller.c
- * Date:
- * Description:
- * Author:
- * Modifications:
- */
+from controller import Robot
 
-/*
- * You may need to add include files like <webots/distance_sensor.h> or
- * <webots/motor.h>, etc.
- */
-#include <webots/robot.h>
+# 1) Création de l'objet Robot
+robot = Robot()
 
-/*
- * You may want to add macros here.
- */
-#define TIME_STEP 64
+# 2) Récupération du pas de temps
+timestep = int(robot.getBasicTimeStep())
 
-/*
- * This is the main program.
- * The arguments of the main function can be specified by the
- * "controllerArgs" field of the Robot node
- */
-int main(int argc, char **argv) {
-  /* necessary to initialize webots stuff */
-  wb_robot_init();
+# 3) Récupération et activation des capteurs de distance
+capteurs = []
 
-  /*
-   * You should declare here WbDeviceTag variables for storing
-   * robot devices like this:
-   *  WbDeviceTag my_sensor = wb_robot_get_device("my_sensor");
-   *  WbDeviceTag my_actuator = wb_robot_get_device("my_actuator");
-   */
+noms_capteurs = [
+    'ps0', 'ps1', 'ps2', 'ps3',
+    'ps4', 'ps5', 'ps6', 'ps7'
+]
 
-  /* main loop
-   * Perform simulation steps of TIME_STEP milliseconds
-   * and leave the loop when the simulation is over
-   */
-  while (wb_robot_step(TIME_STEP) != -1) {
-    /*
-     * Read the sensors :
-     * Enter here functions to read sensor data, like:
-     *  double val = wb_distance_sensor_get_value(my_sensor);
-     */
+for nom in noms_capteurs:
+    capteur = robot.getDevice(nom)
+    capteur.enable(timestep)
+    capteurs.append(capteur)
 
-    /* Process sensor data here */
+# 4) Récupération des moteurs des deux roues
+moteur_gauche = robot.getDevice('left wheel motor')
+moteur_droit = robot.getDevice('right wheel motor')
 
-    /*
-     * Enter here functions to send actuator commands, like:
-     * wb_motor_set_position(my_actuator, 10.0);
-     */
-  };
+# Passage des moteurs en mode vitesse
+moteur_gauche.setPosition(float('inf'))
+moteur_droit.setPosition(float('inf'))
 
-  /* Enter your cleanup code here */
+# Arrêt initial des moteurs
+moteur_gauche.setVelocity(0.0)
+moteur_droit.setVelocity(0.0)
 
-  /* This is necessary to cleanup webots resources */
-  wb_robot_cleanup();
+# 5) Boucle principale
+while robot.step(timestep) != -1:
 
-  return 0;
-}
+    # Lecture des capteurs
+    valeurs = [c.getValue() for c in capteurs]
+
+    # Capteurs du côté droit
+    ps1, ps2 = valeurs[1], valeurs[2]
+
+    # Capteurs du côté gauche
+    ps5, ps6 = valeurs[5], valeurs[6]
+
+    # 6) Logique de commande (à compléter)
+    vitesse_gauche = 2.0
+    vitesse_droite = 2.0
+
+    # 7) Commande des moteurs
+    moteur_gauche.setVelocity(vitesse_gauche)
+    moteur_droit.setVelocity(vitesse_droite)
