@@ -4,12 +4,13 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/WoodenBox.proto"
 
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.4349819075667935 0.08196683126643838 -0.896700718557587 2.806804635438145
-  position 1.4427750691671426 0.7890630718252737 2.0129877021250207
+  orientation 0.3747166051500896 0.39023984082002866 -0.8410114936560323 1.7029607101952382
+  position -0.013755460002963793 2.187993380392907 2.3150710740837175
 }
 TexturedBackground {
 }
@@ -20,30 +21,29 @@ RectangleArena {
   floorSize 1.5 1.5
   floorTileSize 0.25 0.25
 }
-RectangleArena {
-  translation -0.55 -0.19 0
-  name "rectangle arena(2)"
-  floorSize 0.375 0.375
-  floorTileSize 0.25 0.25
-}
-RectangleArena {
-  translation 0.01 -0.05 -0.04
-  name "rectangle arena(1)"
-  floorSize 0.73 0.65
-  wallHeight 0.2
-}
 E-puck {
-  hidden linearVelocity_0 -0.10399817728555376 0.00014864661026285582 0.00021844202118457483
-  hidden angularVelocity_0 0.002035592382296807 -0.004334673241122935 -0.0008055602433497546
-  hidden translation_1 0 0.02599999999999995 0.02
-  hidden rotation_1 0 -1 0 2.6203397077828887
-  hidden linearVelocity_1 -0.10401992168369567 0.0001391409423670982 0.0001525303472595317
-  hidden angularVelocity_1 0.5361571544744493 -5.201000753775191 0.009099996559068568
-  hidden translation_2 0 -0.025999999999999978 0.02
-  hidden rotation_2 0 -0.9999999999999999 0 4.719447511211342
-  hidden linearVelocity_2 -0.10402039944852563 0.0001377360326258372 0.00027814507755692663
-  hidden angularVelocity_2 0.536157321594979 -5.2010007559991545 0.009099843565790652
-  translation -0.2111963778040241 0.446809091916714 -8.731255609631568e-05
-  rotation 0.0007906392476028178 0.0009404384632994391 0.9999992452322535 -3.0392869586623474
+  hidden position_0_0 1172.7948205274909
+  hidden position_0_1 1211.922103124338
+  hidden linearVelocity_0 0.018265051521050436 0.09117642102305101 -2.9104788873914048e-08
+  hidden angularVelocity_0 0.018324719827188318 -0.003670918176240424 -7.012866791510998e-08
+  hidden translation_1 0 0.025999999999999968 0.02
+  hidden rotation_1 0 -1 0 6.004025075341272
+  hidden linearVelocity_1 0.01824669674475471 0.09108479758889507 -1.279826170858508e-07
+  hidden angularVelocity_1 -4.554239889035342 0.9123348234175442 2.5897191492200114e-08
+  hidden translation_2 0 -0.026000000000000044 0.02
+  hidden rotation_2 0 -1 0 2.249879686496214
+  hidden linearVelocity_2 0.018246693438349667 0.09108479818921567 -1.2831986351561932e-07
+  hidden angularVelocity_2 -4.554239915967892 0.9123346889617294 -1.5691062163586032e-07
+  translation 0.47659410927726353 0.5227314941380273 -0.010063942194961446
+  rotation 0.0005291281968306536 -0.0006456387914509505 0.9999996515868905 1.3730872240010157
   controller "my_controller"
+}
+WoodenBox {
+  translation 0 0 0.09
+  size 0.755 0.755 0.2
+}
+WoodenBox {
+  translation -0.19 0.56 0.09
+  name "wooden box(1)"
+  size 0.37 0.37 0.2
 }
